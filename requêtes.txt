@@ -1,0 +1,48 @@
+select v.num_immatriculation,ma.nom_marque,mo.nom_modele
+from vehicules v,modeles mo,marques ma
+where v.num_immatriculation=mo.num_immatriculation
+and mo.numimmatriculation=ma.num_immatriculation
+and v.date_achat='2000'
+and v.kilometrage>50000;
+
+select v.num_immatriculation,ma.nom_marque,mo.nom_modele
+from vehicules v,modeles mo,marques ma,agences a,dossiers d
+where a.id_agence=d.id_agence_reservation
+and d.id_dossier=v.id_dossier
+and v.num_immatriculation=mo.num_immatriculation
+and mo.numimmatriculation=ma.num_immatriculation
+and d.date_retour-effectif_date_retrait>10
+and to_char(d.date-retour_effectif,'MM')=10
+and a.ville='nancy';
+
+select v.num_immatriculation,ma.nom_marque,mo.nom_modele
+from vehicules v,modeles mo,marques ma,agences a,dossiers d,categories c
+where a.id_agence=d.id_agence_reservation
+and d.id_dossier=v.id_dossier
+and v.num_immatriculation=mo.num_immatriculation
+and mo.numimmatriculation=ma.num_immatriculation
+and v.id_categorie=c.id_categorie
+and sysdate>date_retour-effectif
+or sysdate<date-retrait
+and a.ville='nancy'
+and lower(c.nom)='c1';
+
+select v.num_immatriculation,ma.nom_marque,mo.nom_modele
+from vehicules v,modeles mo,marques ma,categories c,tarifs t
+where v.num_immatriculation=mo.num_immatriculation
+and mo.numimmatriculation=ma.num_immatriculation
+and v.id_categorie=c.id_categorie
+and c.id_categorie=t.id_categorie
+and t.prix_jour>30;
+
+select v.num_immatriculation,ma.nom_marque,mo.nom_modele
+from vehicules v,modeles mo,marques ma,agences a,dossiers d,categories c
+where a.id_agence=d.id_agence_reservation
+and d.id_dossier=v.id_dossier
+and v.num_immatriculation=mo.num_immatriculation
+and mo.numimmatriculation=ma.num_immatriculation
+and v.id_categorie=c.id_categorie
+and sysdate>date_retour-effectif
+or sysdate<date-retrait
+and a.ville='nancy'
+and lower(c.nom)='c1';
