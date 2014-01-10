@@ -46,3 +46,6 @@ and sysdate>date_retour-effectif
 or sysdate<date-retrait
 and a.ville='nancy'
 and lower(c.nom)='c1';
+
+
+Plouf
