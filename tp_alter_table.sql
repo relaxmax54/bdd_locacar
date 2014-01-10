@@ -1,4 +1,5 @@
 -- Definition des contraintes de CLES PRIMAIRES --
+
 ALTER TABLE DOSSIERS 	ADD CONSTRAINT	dossiers_id_dossier_pk PRIMARY KEY (id_dossier);
 ALTER TABLE CLIENTS 	ADD CONSTRAINT	clients_id_client_pk PRIMARY KEY (id_client);
 ALTER TABLE VEHICULES 	ADD CONSTRAINT	vehicules_num_immat_pk PRIMARY KEY (num_immatriculation);
@@ -13,6 +14,7 @@ ALTER TABLE PAYS 		ADD CONSTRAINT	pays_id_pays_pk PRIMARY KEY (id_pays);
 ALTER TABLE VILLES 		ADD CONSTRAINT	villes_id_ville_pk PRIMARY KEY (id_ville);
 
 -- Definition des contraintes de CLES ETRANGERES --
+
 ALTER TABLE DOSSIERS 	ADD (
 	CONSTRAINT	dossiers_id_client_fk FOREIGN KEY (id_client)
 	REFERENCES	CLIENTS(id_client),
@@ -62,60 +64,22 @@ ALTER TABLE VILLES 		ADD (
 	REFERENCES	PAYS(id_pays)
 	);
 
+-- Definition des contraintes de CHECK --
 
-
-
-
-
-
-
-
--- Table DOSSIERS
-	
-
-	CONSTRAINT	chk_retour_theorique_after_retrait CHECK (date_retour_prevu > date_retrait),
-	CONSTRAINT	chk_retour_after_retrait CHECK (date_retour_effectif > date_retrait),
-	CONSTRAINT	chk_km_positif CHECK (km_arrivee > km_depart),
-	CONSTRAINT	chk_boolean_assurance CHECK (assurance_prise = UPPER('O') or assurance_prise = UPPER('N'))
-
--- Table CLIENTS
-ALTER TABLE CLIENTS ADD (
-	
--- Table VEHICULES
-ALTER TABLE VEHICULES ADD (
-
--- Table AGENCES
-ALTER TABLE AGENCES ADD (
-
--- Table PAIEMENTS
-ALTER TABLE PAIEMENTS ADD (
-
+ALTER TABLE DOSSIERS 	ADD (
+	CONSTRAINT	chk_dossiers_retour_theorique_after_retrait CHECK (date_retour_prevu > date_retrait),
+	CONSTRAINT	chk_dossiers_retour_after_retrait CHECK (date_retour_effectif > date_retrait),
+	CONSTRAINT	chk_dossiers_km_positif CHECK (km_arrivee > km_depart),
+	CONSTRAINT	chk_dossiers_boolean_assurance CHECK (assurance_prise = UPPER('O') or assurance_prise = UPPER('N'))
+	);		
+ALTER TABLE PAIEMENTS 	ADD (
 	CONSTRAINT	chk_paiements_montant_positif	CHECK (montant >= 0)
-
--- Table MODELES
-ALTER TABLE MODELES ADD (
-
--- Table MARQUES
-ALTER TABLE MARQUES ADD (
-	
--- Table CATEGORIES
-ALTER TABLE CATEGORIES ADD (
-	
+	);
+ALTER TABLE CATEGORIES 	ADD (
 	CONSTRAINT	chk_categories_prix_assurance_positif	CHECK (prix_assurance >= 0)
 	);
-	
--- Table TARIFS
-ALTER TABLE TARIFS ADD(
-
-	CONSTRAINT	chk_tarifs_prix_jour_positif	CHECK (prix_jour >= 0)
+ALTER TABLE TARIFS 		ADD (
+	CONSTRAINT	chk_tarifs_prix_jour_positif	CHECK (prix_jour >= 0),
 	CONSTRAINT	chk_tarifs_prix_km_positif	CHECK (prix_km >= 0)
-
--- Table COULEURS
-ALTER TABLE COULEURS ADD (
-
--- Table PAYS
-ALTER TABLE PAYS ADD (
-
--- Table VILLES
-ALTER TABLE VILLES ADD (
+	);
 
