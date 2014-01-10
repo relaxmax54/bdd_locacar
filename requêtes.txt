@@ -49,3 +49,4 @@ and lower(c.nom)='c1';
 
 
 Plouf
+BIM
