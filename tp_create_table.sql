@@ -6,12 +6,12 @@
 	id_agence_retour	NUMBER(4),
 	num_immatriculation	VARCHAR2(7),
 	id_tarif		NUMBER(4),
-	date_retrait		DATE CONSTRAINT dossiers_date_retrait_nn NOT NULL,
-	date_retour_prevu	DATE CONSTRAINT dossiers_date_retour_prevu_nn NOT NULL,
-	date_retour_effectif	DATE CONSTRAINT dossiers_date_retour_effectif_nn NOT NULL,
-	km_depart		NUMBER(6) CONSTRAINT dossiers_km_depart_nn NOT NULL,
-	km_arrivee		NUMBER(6) CONSTRAINT dossiers_km_arrivee_nn NOT NULL,
-	assurance_prise		CHAR(1) CONSTRAINT dossiers_assurance_prise_nn NOT NULL,
+	date_retrait		DATE CONSTRAINT dos_date_retrait_nn NOT NULL,
+	date_retour_prevu	DATE CONSTRAINT dos_date_retour_prevu_nn NOT NULL,
+	date_retour_effectif	DATE CONSTRAINT dos_date_retour_effectif_nn NOT NULL,
+	km_depart		NUMBER(6) CONSTRAINT dos_km_depart_nn NOT NULL,
+	km_arrivee		NUMBER(6) CONSTRAINT dos_km_arrivee_nn NOT NULL,
+	assurance_prise		CHAR(1) CONSTRAINT dos_assurance_prise_nn NOT NULL,
 	montant_remise		NUMBER(6),
 	pourcentage_remise	NUMBER(3) 	
 	);

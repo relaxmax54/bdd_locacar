@@ -1,6 +1,6 @@
 -- Definition des contraintes de CLES PRIMAIRES --
 
-ALTER TABLE DOSSIERS 	ADD CONSTRAINT	dossiers_id_dossier_pk PRIMARY KEY (id_dossier);
+ALTER TABLE DOSSIERS 	ADD CONSTRAINT	dos_id_dossier_pk PRIMARY KEY (id_dossier);
 ALTER TABLE CLIENTS 	ADD CONSTRAINT	clients_id_client_pk PRIMARY KEY (id_client);
 ALTER TABLE VEHICULES 	ADD CONSTRAINT	vehicules_num_immat_pk PRIMARY KEY (num_immatriculation);
 ALTER TABLE AGENCES 	ADD CONSTRAINT	agences_id_agence_pk PRIMARY KEY (id_agence);
@@ -16,17 +16,17 @@ ALTER TABLE VILLES 		ADD CONSTRAINT	villes_id_ville_pk PRIMARY KEY (id_ville);
 -- Definition des contraintes de CLES ETRANGERES --
 
 ALTER TABLE DOSSIERS 	ADD (
-	CONSTRAINT	dossiers_id_client_fk FOREIGN KEY (id_client)
+	CONSTRAINT	dos_id_client_fk FOREIGN KEY (id_client)
 	REFERENCES	CLIENTS(id_client),
-	CONSTRAINT	dossiers_id_ag_res_fk FOREIGN KEY (id_agence_reservation)
+	CONSTRAINT	dos_id_ag_res_fk FOREIGN KEY (id_agence_reservation)
 	REFERENCES	AGENCES(id_agence),
-	CONSTRAINT	dossiers_id_ag_retrait_fk FOREIGN KEY (id_agence_retrait)
+	CONSTRAINT	dos_id_ag_retrait_fk FOREIGN KEY (id_agence_retrait)
 	REFERENCES	AGENCES(id_agence),
-	CONSTRAINT	dossiers_id_ag_retour_fk FOREIGN KEY (id_agence_retour)
+	CONSTRAINT	dos_id_ag_retour_fk FOREIGN KEY (id_agence_retour)
 	REFERENCES	AGENCES(id_agence),
-	CONSTRAINT	dossiers_num_immat_fk FOREIGN KEY (num_immatriculation)
+	CONSTRAINT	dos_num_immat_fk FOREIGN KEY (num_immatriculation)
 	REFERENCES	VEHICULES(num_immatriculation),
-	CONSTRAINT	dossiers_id_tarif_fk FOREIGN KEY (id_tarif)
+	CONSTRAINT	dos_id_tarif_fk FOREIGN KEY (id_tarif)
 	REFERENCES	TARIFS(id_tarif) 
 	);	
 ALTER TABLE CLIENTS 	ADD (
