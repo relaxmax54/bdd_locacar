@@ -1,3 +1,192 @@
+	CREATE TABLE 	DOSSIERS (
+	id_dossier		NUMBER(4),
+	id_client		NUMBER(4),	
+	id_agence_reservation	NUMBER(4),
+	id_agence_retrait	NUMBER(4),
+	id_agence_retour	NUMBER(4),
+	num_immatriculation	VARCHAR2(7),
+	id_tarif		NUMBER(4),
+	date_retrait		DATE CONSTRAINT dos_date_retrait_nn NOT NULL,
+	date_retour_prevu	DATE CONSTRAINT dos_date_retour_prevu_nn NOT NULL,
+	date_retour_effectif	DATE CONSTRAINT dos_date_retour_effectif_nn NOT NULL,
+	km_depart		NUMBER(6) CONSTRAINT dos_km_depart_nn NOT NULL,
+	km_arrivee		NUMBER(6) CONSTRAINT dos_km_arrivee_nn NOT NULL,
+	assurance_prise		CHAR(1) CONSTRAINT dos_assurance_prise_nn NOT NULL,
+	montant_remise		NUMBER(6),
+	pourcentage_remise	NUMBER(3) 	
+	);
+
+
+CREATE TABLE	CLIENTS (
+	id_client	NUMBER(4),
+	id_ville	VARCHAR2(7)  CONSTRAINT clients_id_ville_nn NOT NULL,
+	nom		VARCHAR2(25) CONSTRAINT clients_nom_nn NOT NULL,
+	prenom		VARCHAR2(25),
+	adresse		VARCHAR2(255)	
+	);
+
+
+CREATE TABLE	VEHICULES (
+	num_immatriculation	VARCHAR2(7),
+	id_modele		NUMBER(2),
+	id_couleur		NUMBER(3),	
+	id_agence		NUMBER(4),
+	date_achat		DATE CONSTRAINT vehicules_date_achat_nn NOT NULL,
+	km_parcourus	NUMBER(6) CONSTRAINT vehicules_km_parcourus_nn NOT NULL
+	);
+
+	
+CREATE TABLE	AGENCES (
+	id_agence	NUMBER(4),
+	id_ville	VARCHAR2(7),
+	adresse		VARCHAR2(255),
+	num_telephone	VARCHAR2(10),
+	nom_responsable	VARCHAR2(50) CONSTRAINT agences_nom_responsable_nn NOT NULL
+	);
+
+
+CREATE TABLE	PAIEMENTS (
+	id_paiement	NUMBER(4),
+	id_dossier	NUMBER(4),
+	date_paiement	DATE CONSTRAINT paiements_date_paiement_nn NOT NULL,
+	montant		NUMBER(8,2) 
+	);
+
+
+CREATE TABLE 	MODELES (
+	id_modele	NUMBER(2),
+	id_marque	VARCHAR2(7),
+	id_categorie	NUMBER(4),
+	nom		VARCHAR2(20) CONSTRAINT modeles_nom_nn NOT NULL
+	);
+
+
+CREATE TABLE 	MARQUES (
+	id_marque	VARCHAR2(7),
+	nom		VARCHAR2(20) CONSTRAINT marques_nom_nn NOT NULL
+	);
+
+
+CREATE TABLE 	CATEGORIES (
+	id_categorie	NUMBER(4),
+	nom		VARCHAR2(20),
+	capacite	NUMBER(2),
+	type_permis	VARCHAR2(2),
+	prix_assurance	NUMBER(6,2) 	
+	);
+	
+CREATE TABLE 	TARIFS (
+	id_tarif	NUMBER(4),
+	id_categorie	NUMBER(4),
+	nom		VARCHAR2(20),
+	prix_jour	NUMBER(6,2) CONSTRAINT tarifs_prix_jour_nn NOT NULL,
+	prix_forfait	NUMBER(6,2) CONSTRAINT tarifs_prix_forfait_nn NOT NULL,
+	km_autorises	NUMBER(6)	CONSTRAINT tarifs_km_autorises_nn NOT NULL,
+	prix_km	NUMBER(6,2)	CONSTRAINT tarifs_prix_km_nn NOT NULL
+	);
+
+CREATE TABLE	COULEURS (
+	id_couleur	NUMBER(4),
+	nom	VARCHAR2(20)
+	);
+
+CREATE TABLE	PAYS ( 
+	id_pays	CHAR(2 BYTE),
+	nom 	VARCHAR2(40 BYTE)
+	);
+
+CREATE TABLE	VILLES	 ( 
+	id_ville	VARCHAR2(7),
+	id_pays	CHAR(2 BYTE),
+	nom 	VARCHAR2(40 BYTE),
+	CP 	VARCHAR2(12 BYTE)
+	);
+
+-- Definition des contraintes de CLES PRIMAIRES --
+
+ALTER TABLE DOSSIERS 	ADD CONSTRAINT	dos_id_dossier_pk PRIMARY KEY (id_dossier);
+ALTER TABLE CLIENTS 	ADD CONSTRAINT	clients_id_client_pk PRIMARY KEY (id_client);
+ALTER TABLE VEHICULES 	ADD CONSTRAINT	vehicules_num_immat_pk PRIMARY KEY (num_immatriculation);
+ALTER TABLE AGENCES 	ADD CONSTRAINT	agences_id_agence_pk PRIMARY KEY (id_agence);
+ALTER TABLE PAIEMENTS 	ADD CONSTRAINT	paiements_id_paiement_pk PRIMARY KEY (id_paiement);
+ALTER TABLE MODELES 	ADD CONSTRAINT	modeles_id_modele_pk PRIMARY KEY (id_modele);
+ALTER TABLE MARQUES 	ADD CONSTRAINT	marques_id_marque_pk PRIMARY KEY (id_marque);
+ALTER TABLE CATEGORIES 	ADD CONSTRAINT	categories_id_categorie_pk PRIMARY KEY (id_categorie);
+ALTER TABLE TARIFS 		ADD CONSTRAINT	tarifs_id_tarif_pk PRIMARY KEY (id_tarif);
+ALTER TABLE COULEURS 	ADD CONSTRAINT	couleurs_id_couleur_pk PRIMARY KEY (id_couleur);
+ALTER TABLE PAYS 		ADD CONSTRAINT	pays_id_pays_pk PRIMARY KEY (id_pays);
+ALTER TABLE VILLES 		ADD CONSTRAINT	villes_id_ville_pk PRIMARY KEY (id_ville);
+
+-- Definition des contraintes de CLES ETRANGERES --
+
+ALTER TABLE DOSSIERS 	ADD (
+	CONSTRAINT	dos_id_client_fk FOREIGN KEY (id_client)
+	REFERENCES	CLIENTS(id_client),
+	CONSTRAINT	dos_id_ag_res_fk FOREIGN KEY (id_agence_reservation)
+	REFERENCES	AGENCES(id_agence),
+	CONSTRAINT	dos_id_ag_retrait_fk FOREIGN KEY (id_agence_retrait)
+	REFERENCES	AGENCES(id_agence),
+	CONSTRAINT	dos_id_ag_retour_fk FOREIGN KEY (id_agence_retour)
+	REFERENCES	AGENCES(id_agence),
+	CONSTRAINT	dos_num_immat_fk FOREIGN KEY (num_immatriculation)
+	REFERENCES	VEHICULES(num_immatriculation),
+	CONSTRAINT	dos_id_tarif_fk FOREIGN KEY (id_tarif)
+	REFERENCES	TARIFS(id_tarif) 
+	);	
+ALTER TABLE CLIENTS 	ADD (
+	CONSTRAINT	clients_id_ville_fk	FOREIGN KEY (id_ville)
+	REFERENCES	VILLES(id_ville)
+	);
+ALTER TABLE VEHICULES 	ADD (
+	CONSTRAINT	vehicules_id_modele_fk FOREIGN KEY (id_modele)
+	REFERENCES	MODELES(id_modele),
+	CONSTRAINT	vehicules_id_couleur_fk	FOREIGN KEY (id_couleur)
+	REFERENCES	COULEURS(id_couleur),
+	CONSTRAINT	vehicules_id_agence_fk	FOREIGN KEY (id_agence)
+	REFERENCES	AGENCES(id_agence)
+	);
+ALTER TABLE AGENCES 	ADD	(
+	CONSTRAINT	agences_id_ville_fk	FOREIGN KEY (id_ville)
+	REFERENCES	VILLES(id_ville)
+	);
+ALTER TABLE PAIEMENTS 	ADD (
+	CONSTRAINT	paiements_id_dossier_fk	FOREIGN KEY (id_dossier)
+	REFERENCES	DOSSIERS(id_dossier)
+	);
+ALTER TABLE MODELES 	ADD (
+	CONSTRAINT 	modeles_id_marque_fk FOREIGN KEY (id_marque)
+	REFERENCES 	MARQUES(id_marque),
+	CONSTRAINT	modeles_id_categorie_fk	FOREIGN KEY (id_categorie)
+	REFERENCES	CATEGORIES(id_categorie)
+	);
+ALTER TABLE TARIFS 		ADD (
+	CONSTRAINT	tarifs_id_categorie_fk	FOREIGN KEY (id_categorie)
+	REFERENCES	CATEGORIES(id_categorie)
+	);
+ALTER TABLE VILLES 		ADD (	
+	CONSTRAINT	villes_id_pays_fk	FOREIGN KEY	(id_pays)
+	REFERENCES	PAYS(id_pays)
+	);
+
+-- Definition des contraintes de CHECK --
+
+ALTER TABLE DOSSIERS 	ADD (
+	CONSTRAINT	chk_dos_ret_theo_sup_retrait CHECK (date_retour_prevu > date_retrait),
+	CONSTRAINT	chk_dos_ret_sup_retrait CHECK (date_retour_effectif > date_retrait),
+	CONSTRAINT	chk_dos_km_positif CHECK (km_arrivee > km_depart),
+	CONSTRAINT	chk_dos_boolean_assurance CHECK (assurance_prise = UPPER('O') or assurance_prise = UPPER('N'))
+	);		
+ALTER TABLE PAIEMENTS 	ADD (
+	CONSTRAINT	chk_paiements_montant_positif	CHECK (montant >= 0)
+	);
+ALTER TABLE CATEGORIES 	ADD (
+	CONSTRAINT	chk_cat_prix_assurance_positif	CHECK (prix_assurance >= 0)
+	);
+ALTER TABLE TARIFS 		ADD (
+	CONSTRAINT	chk_tarifs_prix_jour_positif	CHECK (prix_jour >= 0),
+	CONSTRAINT	chk_tarifs_prix_km_positif	CHECK (prix_km >= 0)
+	);
+
 INSERT INTO PAYS ( ID_PAYS, NOM ) VALUES ( 'AR', 'Argentina'); 
 INSERT INTO PAYS ( ID_PAYS, NOM ) VALUES ( 'AU', 'Australia'); 
 INSERT INTO PAYS ( ID_PAYS, NOM ) VALUES ( 'BE', 'Belgium'); 
@@ -99,4 +288,3 @@ INSERT INTO DOSSIERS (ID_DOSSIER, ID_CLIENT, ID_AGENCE_RESERVATION, ID_AGENCE_RE
 	VALUES (1, 1, 1, 1, 1, 'AM372RR', 2, TO_Date( '11/10/2013', 'MM/DD/YYYY'), TO_Date( '11/13/2013', 'MM/DD/YYYY'), TO_Date( '12/13/2013', 'MM/DD/YYYY'), 24990, 25500, O )
 INSERT INTO DOSSIERS (ID_DOSSIER, ID_CLIENT, ID_AGENCE_RESERVATION, ID_AGENCE_RETRAIT, ID_AGENCE_RETOUR, NUM_IMMATRICULATION, ID_TARIF, DATE_RETRAIT, DATE_RETOUR_PREVU, DATE_RETOUR_EFFECTIF, KM_DEPART, KM_ARRIVEE, ASSURANCE_PRISE) 
 	VALUES (2, 2, 3, 3, 3, 'AM472RR', 3, TO_Date( '11/10/2013', 'MM/DD/YYYY'), TO_Date( '11/13/2013', 'MM/DD/YYYY'), TO_Date( '12/13/2013', 'MM/DD/YYYY'), 29000, 30000, O )
-

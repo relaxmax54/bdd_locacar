@@ -38,7 +38,7 @@ CREATE TABLE	VEHICULES (
 	
 CREATE TABLE	AGENCES (
 	id_agence	NUMBER(4),
-	id_ville	VARCHAR2(7) CONSTRAINT agences_id_ville_nn NOT NULL,
+	id_ville	VARCHAR2(7),
 	adresse		VARCHAR2(255),
 	num_telephone	VARCHAR2(10),
 	nom_responsable	VARCHAR2(50) CONSTRAINT agences_nom_responsable_nn NOT NULL
@@ -75,7 +75,6 @@ CREATE TABLE 	CATEGORIES (
 	prix_assurance	NUMBER(6,2) 	
 	);
 	
-
 CREATE TABLE 	TARIFS (
 	id_tarif	NUMBER(4),
 	id_categorie	NUMBER(4),
@@ -93,12 +92,12 @@ CREATE TABLE	COULEURS (
 
 CREATE TABLE	PAYS ( 
 	id_pays	CHAR(2 BYTE),
-	nom 	VARCHAR2(20)
+	nom 	VARCHAR2(40 BYTE)
 	);
 
 CREATE TABLE	VILLES	 ( 
 	id_ville	VARCHAR2(7),
 	id_pays	CHAR(2 BYTE),
-	nom 	VARCHAR2(20),
+	nom 	VARCHAR2(40 BYTE),
 	CP 	VARCHAR2(12 BYTE)
 	);
