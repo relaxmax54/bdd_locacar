@@ -41,7 +41,7 @@ CREATE TABLE	AGENCES (
 	id_ville	NUMBER(6) CONSTRAINT agences_id_ville_nn NOT NULL,
 	adresse		VARCHAR2(255),
 	num_telephone	VARCHAR2(10),
-	nom_responsable	VARCHAR2(50) CONSTRAINT agences_nom_responsable_nn NOT NULL,
+	nom_responsable	VARCHAR2(50) CONSTRAINT agences_nom_responsable_nn NOT NULL
 	);
 
 
@@ -75,31 +75,30 @@ CREATE TABLE 	CATEGORIES (
 	prix_assurance	NUMBER(6,2) 	
 	);
 	
-/
+
 CREATE TABLE 	TARIFS (
 	id_tarif	NUMBER(4),
 	id_categorie	NUMBER(4),
 	nom		VARCHAR2(20),
 	prix_jour	NUMBER(6,2) CONSTRAINT tarifs_prix_jour_nn NOT NULL,
 	prix_forfait	NUMBER(6,2) CONSTRAINT tarifs_prix_forfait_nn NOT NULL,
-	km_autorises_jour	NUMBER(6)	CONSTRAINT tarifs_km_autorises_nn NOT NULL,
-	km_autorises_semaine	NUMBER(6)	CONSTRAINT tarifs_km_autorises_nn NOT NULL,
+	km_autorises	NUMBER(6)	CONSTRAINT tarifs_km_autorises_nn NOT NULL,
 	prix_km	NUMBER(6,2)	CONSTRAINT tarifs_prix_km_nn NOT NULL
 	);
 
 CREATE TABLE	COULEURS (
 	id_couleur	NUMBER(4),
-	nom	VARCHAR2(20),
-	)
+	nom	VARCHAR2(20)
+	);
 
 CREATE TABLE	PAYS ( 
 	id_pays	CHAR(2 BYTE),
 	nom 	VARCHAR2(20)
-	)
+	);
 
 CREATE TABLE	VILLES	 ( 
 	id_ville	VARCHAR2(7),
 	id_pays	CHAR(2 BYTE),
 	nom 	VARCHAR2(20),
 	CP 	VARCHAR2(12 BYTE)
-	)
+	);
