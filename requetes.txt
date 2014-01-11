@@ -8,14 +8,15 @@ and v.km_parcourus>50000;
 
 --Question 2
 select v.num_immatriculation,ma.nom_marque,mo.nom_modele
-from vehicules v,modeles mo,marques ma,agences a,dossiers d
-where a.id_agence=d.id_agence_reservation
+from vi villes,vehicules v,modeles mo,marques ma,agences a,dossiers d
+where vi.id_ville=a.id_ville
+and a.id_agence=d.id_agence_reservation
 and d.id_dossier=v.id_dossier
 and v.id_modele=mo.id_modele
 and mo.id_marque=ma.id_marque
 and d.date_retour_effectif-date_retrait>10
 and to_char(d.date_retour_effectif,'MMYY')='1008'
-and lower(a.ville)='nancy';
+and lower(vi.nom)='nancy';
 
 --Question 3
 select v.num_immatriculation,ma.nom_marque,mo.nom_modele
@@ -41,7 +42,7 @@ and t.prix_jour>30;
 
 --Question 5
 select d.id_dossier
-from v villes,agences a,dossiers d
+from villes v,agences a,dossiers d
 where v.id_ville=a.id_ville 
 and a.id_agence=d.id_agence_retrait
 and lower(v.nom)='nancy'
@@ -52,5 +53,27 @@ where v.id_ville=a.id_ville
 and a.id_agence=d.id_agence_retour
 and lower(v.nom)='strasbourg'
 
+--Question 6
+select v.num_immatriculation,ma.nom_marque,sum(jourslocations)
+from villes vi,vehicules v,agences a,dossiers d
+where vi.id_ville=a.id_ville
+and a.id_agence=v.id_agence
+and v.num_immatriculation=d.num_immatriculation
+and jourslocations=d.date_retour_effectif-d.date_retrait
+group by v.num_immatriculation
+having lower(vi.nom)='nancy'
+ 
+
+--Question 7
+select a.id_agence
+from agences a,vehicules v
+where a.id_agence=v.id_agence
+and 
+
+--Question 8
+
+--Question 9
+
+--Question 10
 
 
