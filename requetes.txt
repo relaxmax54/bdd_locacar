@@ -52,5 +52,15 @@ where v.id_ville=a.id_ville
 and a.id_agence=d.id_agence_retour
 and lower(v.nom)='strasbourg'
 
+--Question 7
+SELECT id_agence
+FROM AGENCES
+WHERE 
+	(SELECT a.id_agence, v.num_immatriculation, v.id_agence
+	 FROM AGENCES a, VEHICULES v
+	 WHERE sum(v.num_immatriculation)> ALL
+		(SELECT sum(v.num_immatriculation), a.id_agence, v.num_immatriculation, v.id_agence
+		 FROM VEHICULES v, AGENCES a));
+
 
 
