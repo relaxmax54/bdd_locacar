@@ -39,7 +39,7 @@ ALTER TABLE VEHICULES 	ADD (
 	CONSTRAINT	vehicules_id_couleur_fk	FOREIGN KEY (id_couleur)
 	REFERENCES	COULEURS(id_couleur),
 	CONSTRAINT	vehicules_id_agence_fk	FOREIGN KEY (id_agence)
-	REFERENCES	AGENCES(id_agence),
+	REFERENCES	AGENCES(id_agence)
 	);
 ALTER TABLE AGENCES 	ADD	(
 	CONSTRAINT	agences_id_ville_fk	FOREIGN KEY (id_ville)
@@ -53,7 +53,7 @@ ALTER TABLE MODELES 	ADD (
 	CONSTRAINT 	modeles_id_marque_fk FOREIGN KEY (id_marque)
 	REFERENCES 	MARQUES(id_marque),
 	CONSTRAINT	modeles_id_categorie_fk	FOREIGN KEY (id_categorie)
-	REFERENCES	CATEGORIES(id_categorie),
+	REFERENCES	CATEGORIES(id_categorie)
 	);
 ALTER TABLE TARIFS 		ADD (
 	CONSTRAINT	tarifs_id_categorie_fk	FOREIGN KEY (id_categorie)
@@ -67,16 +67,16 @@ ALTER TABLE VILLES 		ADD (
 -- Definition des contraintes de CHECK --
 
 ALTER TABLE DOSSIERS 	ADD (
-	CONSTRAINT	chk_dossiers_retour_theorique_after_retrait CHECK (date_retour_prevu > date_retrait),
-	CONSTRAINT	chk_dossiers_retour_after_retrait CHECK (date_retour_effectif > date_retrait),
-	CONSTRAINT	chk_dossiers_km_positif CHECK (km_arrivee > km_depart),
-	CONSTRAINT	chk_dossiers_boolean_assurance CHECK (assurance_prise = UPPER('O') or assurance_prise = UPPER('N'))
+	CONSTRAINT	chk_dos_ret_theo_sup_retrait CHECK (date_retour_prevu > date_retrait),
+	CONSTRAINT	chk_dos_ret_sup_retrait CHECK (date_retour_effectif > date_retrait),
+	CONSTRAINT	chk_dos_km_positif CHECK (km_arrivee > km_depart),
+	CONSTRAINT	chk_dos_boolean_assurance CHECK (assurance_prise = UPPER('O') or assurance_prise = UPPER('N'))
 	);		
 ALTER TABLE PAIEMENTS 	ADD (
 	CONSTRAINT	chk_paiements_montant_positif	CHECK (montant >= 0)
 	);
 ALTER TABLE CATEGORIES 	ADD (
-	CONSTRAINT	chk_categories_prix_assurance_positif	CHECK (prix_assurance >= 0)
+	CONSTRAINT	chk_cat_prix_assurance_positif	CHECK (prix_assurance >= 0)
 	);
 ALTER TABLE TARIFS 		ADD (
 	CONSTRAINT	chk_tarifs_prix_jour_positif	CHECK (prix_jour >= 0),

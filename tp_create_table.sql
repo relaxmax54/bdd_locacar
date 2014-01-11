@@ -19,7 +19,7 @@
 
 CREATE TABLE	CLIENTS (
 	id_client	NUMBER(4),
-	id_ville	NUMBER(6)  CONSTRAINT clients_id_ville_nn NOT NULL,
+	id_ville	VARCHAR2(7)  CONSTRAINT clients_id_ville_nn NOT NULL,
 	nom		VARCHAR2(25) CONSTRAINT clients_nom_nn NOT NULL,
 	prenom		VARCHAR2(25),
 	adresse		VARCHAR2(255)	
@@ -38,7 +38,7 @@ CREATE TABLE	VEHICULES (
 	
 CREATE TABLE	AGENCES (
 	id_agence	NUMBER(4),
-	id_ville	NUMBER(6) CONSTRAINT agences_id_ville_nn NOT NULL,
+	id_ville	VARCHAR2(7) CONSTRAINT agences_id_ville_nn NOT NULL,
 	adresse		VARCHAR2(255),
 	num_telephone	VARCHAR2(10),
 	nom_responsable	VARCHAR2(50) CONSTRAINT agences_nom_responsable_nn NOT NULL
@@ -55,7 +55,7 @@ CREATE TABLE	PAIEMENTS (
 
 CREATE TABLE 	MODELES (
 	id_modele	NUMBER(2),
-	id_marque	NUMBER(4),
+	id_marque	VARCHAR2(7),
 	id_categorie	NUMBER(4),
 	nom		VARCHAR2(20) CONSTRAINT modeles_nom_nn NOT NULL
 	);
