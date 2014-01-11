@@ -6,12 +6,12 @@
 	id_agence_retour	NUMBER(4),
 	num_immatriculation	VARCHAR2(7),
 	id_tarif		NUMBER(4),
-	date_retrait		DATE CONSTRAINT dossiers_date_retrait_nn NOT NULL,
-	date_retour_prevu	DATE CONSTRAINT dossiers_date_retour_prevu_nn NOT NULL,
-	date_retour_effectif	DATE CONSTRAINT dossiers_date_retour_effectif_nn NOT NULL,
-	km_depart		NUMBER(6) CONSTRAINT dossiers_km_depart_nn NOT NULL,
-	km_arrivee		NUMBER(6) CONSTRAINT dossiers_km_arrivee_nn NOT NULL,
-	assurance_prise		CHAR(1) CONSTRAINT dossiers_assurance_prise_nn NOT NULL,
+	date_retrait		DATE CONSTRAINT dos_date_retrait_nn NOT NULL,
+	date_retour_prevu	DATE CONSTRAINT dos_date_retour_prevu_nn NOT NULL,
+	date_retour_effectif	DATE CONSTRAINT dos_date_retour_effectif_nn NOT NULL,
+	km_depart		NUMBER(6) CONSTRAINT dos_km_depart_nn NOT NULL,
+	km_arrivee		NUMBER(6) CONSTRAINT dos_km_arrivee_nn NOT NULL,
+	assurance_prise		CHAR(1) CONSTRAINT dos_assurance_prise_nn NOT NULL,
 	montant_remise		NUMBER(6),
 	pourcentage_remise	NUMBER(3) 	
 	);
@@ -19,7 +19,7 @@
 
 CREATE TABLE	CLIENTS (
 	id_client	NUMBER(4),
-	id_ville	NUMBER(6)  CONSTRAINT clients_id_ville_nn NOT NULL,
+	id_ville	VARCHAR2(7)  CONSTRAINT clients_id_ville_nn NOT NULL,
 	nom		VARCHAR2(25) CONSTRAINT clients_nom_nn NOT NULL,
 	prenom		VARCHAR2(25),
 	adresse		VARCHAR2(255)	
@@ -38,10 +38,10 @@ CREATE TABLE	VEHICULES (
 	
 CREATE TABLE	AGENCES (
 	id_agence	NUMBER(4),
-	id_ville	NUMBER(6) CONSTRAINT agences_id_ville_nn NOT NULL,
+	id_ville	VARCHAR2(7),
 	adresse		VARCHAR2(255),
 	num_telephone	VARCHAR2(10),
-	nom_responsable	VARCHAR2(50) CONSTRAINT agences_nom_responsable_nn NOT NULL,
+	nom_responsable	VARCHAR2(50) CONSTRAINT agences_nom_responsable_nn NOT NULL
 	);
 
 
@@ -55,7 +55,7 @@ CREATE TABLE	PAIEMENTS (
 
 CREATE TABLE 	MODELES (
 	id_modele	NUMBER(2),
-	id_marque	NUMBER(4),
+	id_marque	VARCHAR2(7),
 	id_categorie	NUMBER(4),
 	nom		VARCHAR2(20) CONSTRAINT modeles_nom_nn NOT NULL
 	);
@@ -75,31 +75,29 @@ CREATE TABLE 	CATEGORIES (
 	prix_assurance	NUMBER(6,2) 	
 	);
 	
-/
 CREATE TABLE 	TARIFS (
 	id_tarif	NUMBER(4),
 	id_categorie	NUMBER(4),
 	nom		VARCHAR2(20),
 	prix_jour	NUMBER(6,2) CONSTRAINT tarifs_prix_jour_nn NOT NULL,
 	prix_forfait	NUMBER(6,2) CONSTRAINT tarifs_prix_forfait_nn NOT NULL,
-	km_autorises_jour	NUMBER(6)	CONSTRAINT tarifs_km_autorises_nn NOT NULL,
-	km_autorises_semaine	NUMBER(6)	CONSTRAINT tarifs_km_autorises_nn NOT NULL,
+	km_autorises	NUMBER(6)	CONSTRAINT tarifs_km_autorises_nn NOT NULL,
 	prix_km	NUMBER(6,2)	CONSTRAINT tarifs_prix_km_nn NOT NULL
 	);
 
 CREATE TABLE	COULEURS (
 	id_couleur	NUMBER(4),
-	nom	VARCHAR2(20),
-	)
+	nom	VARCHAR2(20)
+	);
 
 CREATE TABLE	PAYS ( 
 	id_pays	CHAR(2 BYTE),
-	nom 	VARCHAR2(20)
-	)
+	nom 	VARCHAR2(40 BYTE)
+	);
 
 CREATE TABLE	VILLES	 ( 
 	id_ville	VARCHAR2(7),
 	id_pays	CHAR(2 BYTE),
-	nom 	VARCHAR2(20),
+	nom 	VARCHAR2(40 BYTE),
 	CP 	VARCHAR2(12 BYTE)
-	)
+	);
