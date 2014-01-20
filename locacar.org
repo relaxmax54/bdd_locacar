@@ -1,0 +1,2 @@
+deux alter tables tarifs ?
+table paiements ?
