@@ -11,7 +11,7 @@
 	date_retour_effectif	DATE DEFAULT SYSDATE CONSTRAINT dos_date_retour_effectif_nn NOT NULL,
 	km_depart		NUMBER(6) DEFAULT 0 CONSTRAINT dos_km_depart_nn NOT NULL,
 	km_arrivee		NUMBER(6) DEFAULT 0 CONSTRAINT dos_km_arrivee_nn NOT NULL,
-	assurance_prise		CHAR(1) DEFAULT 'N' CONSTRAINT dos_assurance_prise_nn NOT NULL,
+	assurance_prise		NUMBER(1) DEFAULT 0 CONSTRAINT dos_assurance_prise_nn NOT NULL,
 	montant_remise		NUMBER(6),
 	pourcentage_remise	NUMBER(3) 	
 	);
@@ -94,6 +94,7 @@ CREATE TABLE	VILLES	 (
 	CP 	VARCHAR2(12 BYTE)
 	);
 
+
 -- Definition des contraintes de CLES PRIMAIRES --
 
 ALTER TABLE DOSSIERS 	ADD CONSTRAINT	dos_id_dossier_pk PRIMARY KEY (id_dossier);
@@ -161,7 +162,7 @@ ALTER TABLE DOSSIERS 	ADD (
 	CONSTRAINT	chk_dos_ret_theo_sup_retrait CHECK (date_retour_prevu > date_retrait),
 	CONSTRAINT	chk_dos_ret_sup_retrait CHECK (date_retour_effectif > date_retrait),
 	CONSTRAINT	chk_dos_km_positif CHECK (km_arrivee > km_depart),
-	CONSTRAINT	chk_dos_boolean_assurance CHECK (UPPER(assurance_prise) = 'O' or UPPER(assurance_prise) = 'N')
+	CONSTRAINT	chk_dos_boolean_assurance CHECK assurance_prise = 0 or assurance_prise = 1
 	);		
 ALTER TABLE CATEGORIES 	ADD (
 	CONSTRAINT	chk_cat_prix_assurance_positif	CHECK (prix_assurance >= 0)
