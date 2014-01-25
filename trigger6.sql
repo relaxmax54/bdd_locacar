@@ -1,5 +1,5 @@
-# Partie 2 | Trigger 6 | trigger qui met à jour le kilométrage d’un véhicule 
-# après mise à jour du kilométrage effectif du véhicule au retour d’une location.
+/* Partie 2 | Trigger 6 | trigger qui met à jour le kilométrage d’un véhicule 
+après mise à jour du kilométrage effectif du véhicule au retour d’une location. */
 
 CREATE OR REPLACE TRIGGER update_km_parcourus
 AFTER UPDATE OF km_arrivee ON DOSSIERS
