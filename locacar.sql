@@ -94,21 +94,30 @@ CREATE TABLE	VILLES	 (
 	CP 	VARCHAR2(12 BYTE)
 	);
 
+CREATE TABLE	LOC_SUP_SEMAINE	(
+	id_dossier 		NUMBER(4),		
+	date_du_jour	DATE DEFAULT SYSDATE,
+	nom_client		VARCHAR2(25),
+	prenom_client	VARCHAR2(25),
+	nom_marque		VARCHAR2(20),
+	modele 			VARCHAR2(20)
+	);
+
 
 -- Definition des contraintes de CLES PRIMAIRES --
 
-ALTER TABLE DOSSIERS 	ADD CONSTRAINT	dos_id_dossier_pk PRIMARY KEY (id_dossier);
-ALTER TABLE CLIENTS 	ADD CONSTRAINT	clients_id_client_pk PRIMARY KEY (id_client);
-ALTER TABLE VEHICULES 	ADD CONSTRAINT	vehicules_num_immat_pk PRIMARY KEY (num_immatriculation);
-ALTER TABLE AGENCES 	ADD CONSTRAINT	agences_id_agence_pk PRIMARY KEY (id_agence);
-ALTER TABLE MODELES 	ADD CONSTRAINT	modeles_id_modele_pk PRIMARY KEY (id_modele);
-ALTER TABLE MARQUES 	ADD CONSTRAINT	marques_id_marque_pk PRIMARY KEY (id_marque);
-ALTER TABLE CATEGORIES 	ADD CONSTRAINT	categories_id_categorie_pk PRIMARY KEY (id_categorie);
-ALTER TABLE TARIFS 		ADD CONSTRAINT	tarifs_id_tarif_pk PRIMARY KEY (id_tarif);
-ALTER TABLE COULEURS 	ADD CONSTRAINT	couleurs_id_couleur_pk PRIMARY KEY (id_couleur);
-ALTER TABLE PAYS 		ADD CONSTRAINT	pays_id_pays_pk PRIMARY KEY (id_pays);
-ALTER TABLE VILLES 		ADD CONSTRAINT	villes_id_ville_pk PRIMARY KEY (id_ville);
-
+ALTER TABLE DOSSIERS 		ADD CONSTRAINT	dos_id_dossier_pk PRIMARY KEY (id_dossier);
+ALTER TABLE CLIENTS 		ADD CONSTRAINT	clients_id_client_pk PRIMARY KEY (id_client);
+ALTER TABLE VEHICULES 		ADD CONSTRAINT	vehicules_num_immat_pk PRIMARY KEY (num_immatriculation);
+ALTER TABLE AGENCES 		ADD CONSTRAINT	agences_id_agence_pk PRIMARY KEY (id_agence);
+ALTER TABLE MODELES 		ADD CONSTRAINT	modeles_id_modele_pk PRIMARY KEY (id_modele);
+ALTER TABLE MARQUES 		ADD CONSTRAINT	marques_id_marque_pk PRIMARY KEY (id_marque);
+ALTER TABLE CATEGORIES 		ADD CONSTRAINT	categories_id_categorie_pk PRIMARY KEY (id_categorie);
+ALTER TABLE TARIFS 			ADD CONSTRAINT	tarifs_id_tarif_pk PRIMARY KEY (id_tarif);
+ALTER TABLE COULEURS 		ADD CONSTRAINT	couleurs_id_couleur_pk PRIMARY KEY (id_couleur);
+ALTER TABLE PAYS 			ADD CONSTRAINT	pays_id_pays_pk PRIMARY KEY (id_pays);
+ALTER TABLE VILLES 			ADD CONSTRAINT	villes_id_ville_pk PRIMARY KEY (id_ville);
+ALTER TABLE LOC_SUP_SEMAINE	ADD	CONSTRAINT	loc_id_dossier_pk PRIMARY KEY (id_dossier);
 -- Definition des contraintes de CLES ETRANGERES --
 
 ALTER TABLE DOSSIERS 	ADD (
