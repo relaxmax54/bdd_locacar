@@ -12,8 +12,8 @@
 	km_depart		NUMBER(6) DEFAULT 0 CONSTRAINT dos_km_depart_nn NOT NULL,
 	km_arrivee		NUMBER(6) DEFAULT 0 CONSTRAINT dos_km_arrivee_nn NOT NULL,
 	assurance_prise		NUMBER(1) DEFAULT 0 CONSTRAINT dos_assurance_prise_nn NOT NULL,
-	montant_remise		NUMBER(6),
-	pourcentage_remise	NUMBER(3) 	
+	montant_remise		NUMBER(6) DEFAULT 0,
+	pourcentage_remise	NUMBER(3) DEFAULT 0 	
 	);
 
 

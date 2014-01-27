@@ -53,16 +53,20 @@ where v.id_ville=a.id_ville
 and a.id_agence=d.id_agence_retour
 and lower(v.nom)='strasbourg'
 
-<<<<<<< HEAD
+
 --Question 6
-select v.num_immatriculation,ma.nom_marque,sum(jourslocations)
-from villes vi,vehicules v,agences a,dossiers d
+select immat,modele,sum(totaljourslocations)
+from(
+select v.num_immatriculation immat,mo.nom modele,d.date_retour_effectif-d.date_retrait totaljourslocations
+from villes vi,vehicules v,agences a,dossiers d,modeles mo
 where vi.id_ville=a.id_ville
 and a.id_agence=v.id_agence
 and v.num_immatriculation=d.num_immatriculation
-and jourslocations=d.date_retour_effectif-d.date_retrait
-group by v.num_immatriculation
-having lower(vi.nom)='nancy'
+and v.id_modele=mo.id_modele
+and lower(vi.nom)='nancy'
+)
+group by immat,modele
+/
  
 
 --Question 7
@@ -84,5 +88,5 @@ WHERE
 --Question 9
 
 --Question 10
-
+/
 
