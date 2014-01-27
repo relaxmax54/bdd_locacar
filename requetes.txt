@@ -94,7 +94,14 @@ group by ve.num_immatriculation,ma.nom,mo.nom
 /
 
 --Question 9
-
+select c.nom,vi.cp,vi.nom ville
+from modeles mo, vehicules ve,dossiers d,clients c, villes vi
+where mo.id_modele=ve.id_modele
+and ve.num_immatriculation=d.num_immatriculation
+and d.id_client=c.id_client
+and c.id_ville=vi.id_ville
+and lower(mo.nom)='saxo1.5d' or lower(mo.nom)='106hdi'
+/
 
 --Question 10
 /
