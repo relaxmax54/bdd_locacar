@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 drop cascade
 
 drop table dossiers;
@@ -25,5 +24,4 @@ DROP TABLE 	TARIFS;
 DROP TABLE	COULEURS;
 DROP TABLE	PAYS;
 DROP TABLE	VILLES;
->>>>>>> ab97344afee2b350d4d1540ba58376bdfd942195
 
