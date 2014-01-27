@@ -104,5 +104,15 @@ and lower(mo.nom)='saxo1.5d' or lower(mo.nom)='106hdi'
 /
 
 --Question 10
+select count(c.id_categorie),a.id_agence
+from agences a, vehicules v, modeles mo, categories c
+where a.id_agence =v.id_agence
+and v.id_modele=mo.id_modele
+and mo.id_categorie=c.id_categorie
+group by a.id_agence
+having count(c.id_categorie) like
+(select count(id_categorie)
+from categories)
 /
+
 
