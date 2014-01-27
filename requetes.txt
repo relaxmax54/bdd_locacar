@@ -80,8 +80,21 @@ WHERE rownum=1
 /
 
 --Question 8
+select ve.num_immatriculation,ma.nom,mo.nom
+from villes vi, agences a, dossiers d,vehicules ve,modeles mo,marques ma
+where vi.id_ville=a.id_ville
+and a.id_agence=d.id_agence_retrait
+and d.num_immatriculation=ve.num_immatriculation
+and ve.id_modele=mo.id_modele
+and mo.id_marque=ma.id_marque
+and lower(vi.nom)='nancy'
+and to_char(date_retrait,'MM/DD/YYYY')>'10/31/2008'
+and to_char(date_retour_effectif,'MM/DD/YYY')<'10/01/2008'
+group by ve.num_immatriculation,ma.nom,mo.nom
+/
 
 --Question 9
+
 
 --Question 10
 /
