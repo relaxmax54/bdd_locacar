@@ -67,21 +67,17 @@ and lower(vi.nom)='nancy'
 )
 group by immat,modele
 /
- 
 
 --Question 7
-SELECT id_agence
-FROM AGENCES
-WHERE 
-	(SELECT a.id_agence, v.num_immatriculation, v.id_agence
-	 FROM AGENCES a, VEHICULES v
-	 WHERE sum(v.num_immatriculation)> ALL
-		(SELECT sum(v.num_immatriculation), a.id_agence, v.num_immatriculation, v.id_agence
-		 FROM VEHICULES v, AGENCES a));
---select a.id_agence
---from agences a,vehicules v
---where a.id_agence=v.id_agence
---and 
+select id,total
+from (
+SELECT a.id_agence id, count (v.num_immatriculation) total
+FROM AGENCES a, VEHICULES v
+WHERE a.id_agence=v.id_agence
+GROUP BY a.id_agence
+)
+WHERE rownum=1
+/
 
 --Question 8
 
