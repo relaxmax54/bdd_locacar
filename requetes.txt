@@ -1,44 +1,51 @@
 --Question 1
-select v.num_immatriculation,ma.nom_marque,mo.nom_modele
+select v.num_immatriculation,ma.nom,mo.nom
 from vehicules v,modeles mo,marques ma
 where v.id_modele=mo.id_modele
 and mo.id_marque=ma.id_marque
-and v.date_achat='2000'
-and v.km_parcourus>50000;
+and to_char(v.date_achat,'YYYY')='2000'
+and v.km_parcourus>50000
+/
+
 
 --Question 2
-select v.num_immatriculation,ma.nom_marque,mo.nom_modele
-from vi villes,vehicules v,modeles mo,marques ma,agences a,dossiers d
+select v.num_immatriculation,ma.nom,mo.nom
+from villes vi,vehicules v,modeles mo,marques ma,agences a,dossiers d
 where vi.id_ville=a.id_ville
 and a.id_agence=d.id_agence_reservation
-and d.id_dossier=v.id_dossier
+and d.num_immatriculation=v.num_immatriculation
 and v.id_modele=mo.id_modele
 and mo.id_marque=ma.id_marque
 and d.date_retour_effectif-date_retrait>10
 and to_char(d.date_retour_effectif,'MMYY')='1008'
-and lower(vi.nom)='nancy';
+and lower(vi.nom)='nancy'
+/
 
 --Question 3
-select v.num_immatriculation,ma.nom_marque,mo.nom_modele
-from vehicules v,modeles mo,marques ma,agences a,dossiers d,categories c
-where a.id_agence=d.id_agence_reservation
-and d.id_dossier=v.id_dossier
+select v.num_immatriculation,ma.nom,mo.nom
+from villes vi,vehicules v,modeles mo,marques ma,agences a,dossiers d,categories c
+where vi.id_ville=a.id_ville
+and a.id_agence=v.id_agence
+and d.num_immatriculation=v.num_immatriculation
 and v.id_modele=mo.id_modele
 and mo.id_marque=ma.id_marque
 and mo.id_categorie=c.id_categorie
-and sysdate>date_retour_effectif
-or sysdate<date-retrait
-and lower(a.ville)='nancy'
-and lower(c.nom)='c1';
+and (sysdate>d.date_retour_effectif or sysdate<d.date_retrait)
+and lower(vi.nom)='nancy'
+and lower(c.nom)='c1'
+group by v.num_immatriculation,ma.nom,mo.nom
+/
 
 --Question 4
-select v.num_immatriculation,ma.nom_marque,mo.nom_modele
+select v.num_immatriculation,ma.nom,mo.nom
 from vehicules v,modeles mo,marques ma,categories c,tarifs t
 where v.id_modele=mo.id_modele
 and mo.id_marque=ma.id_marque
 and mo.id_categorie=c.id_categorie
 and c.id_categorie=t.id_categorie
-and t.prix_jour>30;
+and t.prix_jour>30
+group by v.num_immatriculation,ma.nom,mo.nom
+/
 
 --Question 5
 select d.id_dossier
@@ -46,12 +53,13 @@ from villes v,agences a,dossiers d
 where v.id_ville=a.id_ville 
 and a.id_agence=d.id_agence_retrait
 and lower(v.nom)='nancy'
-INTER
+INTERSECT
 select d.id_dossier
-from v villes,agences a,dossiers d
+from villes v,agences a,dossiers d
 where v.id_ville=a.id_ville
 and a.id_agence=d.id_agence_retour
 and lower(v.nom)='strasbourg'
+/
 
 
 --Question 6
@@ -83,13 +91,12 @@ WHERE rownum=1
 select ve.num_immatriculation,ma.nom,mo.nom
 from villes vi, agences a, dossiers d,vehicules ve,modeles mo,marques ma
 where vi.id_ville=a.id_ville
-and a.id_agence=d.id_agence_retrait
-and d.num_immatriculation=ve.num_immatriculation
+and a.id_agence=ve.id_agence
+and d.num_immatriculation(+)=ve.num_immatriculation
 and ve.id_modele=mo.id_modele
 and mo.id_marque=ma.id_marque
 and lower(vi.nom)='nancy'
-and to_char(date_retrait,'MM/DD/YYYY')>'10/31/2008'
-and to_char(date_retour_effectif,'MM/DD/YYY')<'10/01/2008'
+and (to_char(NVL(d.date_retrait,SYSDATE),'MM/DD/YYYY')>'10/31/2008' or to_char(NVL (d.date_retour_effectif,SYSDATE),'MM/DD/YYY')<'10/01/2008')
 group by ve.num_immatriculation,ma.nom,mo.nom
 /
 
@@ -100,7 +107,8 @@ where mo.id_modele=ve.id_modele
 and ve.num_immatriculation=d.num_immatriculation
 and d.id_client=c.id_client
 and c.id_ville=vi.id_ville
-and lower(mo.nom)='saxo1.5d' or lower(mo.nom)='106hdi'
+and (lower(mo.nom)='saxo1.5d' or lower(mo.nom)='106hdi')
+group by c.nom,vi.cp,vi.nom
 /
 
 --Question 10
