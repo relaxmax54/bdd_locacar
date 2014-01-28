@@ -22,3 +22,58 @@ end loop;
 return 10;
 end;
 /
+create or replace function devis(modeleVehicule in modeles.id_modele%type)return number is
+cursor modele is select id_modele from modeles;
+begin
+for record in modele loop
+dbms_output.put_line('a');
+end loop;
+return 10;
+end;
+/
+create or replace function devis(modeleVehicule in modeles.id_modele%type)return number is
+cursor modele is select id_modele from modeles;
+reponse number :=0;
+begin
+for record in modele loop
+dbms_output.put_line(reponse);
+end loop;
+return reponse;
+end;
+/
+create or replace function devis(modeleVehicule in modeles.id_modele%type)return number is
+cursor modele is select id_modele from modeles;
+reponse number :=0;
+begin
+for record in modele loop
+if(record>reponse) then
+dbms_output.put_line(reponse);
+end if;
+end loop;
+return reponse;
+end;
+/
+create or replace function devis(modeleVehicule in modeles.id_modele%type)return number is
+cursor modele is select id_modele from modeles;
+reponse number :=0;
+begin
+for record in modele loop
+if(record>reponse) then
+dbms_output.put_line(reponse);
+end if;
+end loop;
+return reponse;
+end;
+/
+create or replace function devis(modeleVehicule in modeles.id_modele%type)return number is
+cursor modele is select id_modele from modeles;
+reponse number :=0;
+begin
+for record in modele loop
+if(record.id_modele>reponse) then
+dbms_output.put_line(reponse);
+end if;
+end loop;
+return reponse;
+end;
+/
