@@ -170,7 +170,7 @@ ALTER TABLE VILLES 		ADD (
 ALTER TABLE DOSSIERS 	ADD (
 	CONSTRAINT	chk_dos_ret_theo_sup_retrait CHECK (date_retour_prevu > date_retrait),
 	CONSTRAINT	chk_dos_ret_sup_retrait CHECK (date_retour_effectif > date_retrait),
-	CONSTRAINT	chk_dos_km_positif CHECK (km_arrivee > km_depart),
+	CONSTRAINT	chk_dos_km_positif CHECK (km_arrivee >= km_depart),
 	CONSTRAINT	chk_dos_boolean_assurance CHECK (assurance_prise = 0 or assurance_prise = 1)
 	);		
 ALTER TABLE CATEGORIES 	ADD (
