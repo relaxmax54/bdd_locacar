@@ -3,7 +3,9 @@ toutes les locations dont la durée est > 7 jours.*/
 
 CREATE OR REPLACE TRIGGER update_loc_sup_semaine
 AFTER UPDATE OF date_retour_effectif ON DOSSIERS
-
+FOR EACH ROW
+DECLARE
+	PRAGMA AUTONOMOUS_TRANSACTION;
 BEGIN
 	IF date_retour_effectif-date_retrait + 1 > 7
 	THEN (
@@ -17,6 +19,7 @@ BEGIN
 				SYSDATE);
 		WHERE id_dossier = :OLD.id_dossier;);
 	END IF;
+	COMMIT;
 END;
 /
 
