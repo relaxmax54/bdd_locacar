@@ -12,7 +12,7 @@
 	km_arrivee		NUMBER(6) DEFAULT 0 CONSTRAINT dos_km_arrivee_nn NOT NULL,
 	assurance_prise		NUMBER(1) DEFAULT 0 CONSTRAINT dos_assurance_prise_nn NOT NULL,
 	montant_remise		NUMBER(6) DEFAULT 0,
-	pourcentage_remise	NUMBER(3) DEFAULT 0 	
+	pourcentage_remise	NUMBER(3) DEFAULT 0
 	);
 
 
@@ -31,7 +31,8 @@ CREATE TABLE	VEHICULES (
 	id_couleur		NUMBER(3),	
 	id_agence		NUMBER(4), 
 	date_achat		DATE DEFAULT SYSDATE CONSTRAINT vehicules_date_achat_nn NOT NULL,
-	km_parcourus	NUMBER(6) DEFAULT 0 CONSTRAINT vehicules_km_parcourus_nn NOT NULL
+	km_parcourus	NUMBER(6) DEFAULT 0 CONSTRAINT vehicules_km_parcourus_nn NOT NULL,
+	compteur		NUMBER(3) DEFAULT 0	
 	);
 
 	
