@@ -12,13 +12,14 @@ and v.km_parcourus>50000
 select v.num_immatriculation,ma.nom,mo.nom
 from villes vi,vehicules v,modeles mo,marques ma,agences a,dossiers d
 where vi.id_ville=a.id_ville
-and a.id_agence=d.id_agence_reservation
+and a.id_agence=v.id_agence
 and d.num_immatriculation=v.num_immatriculation
 and v.id_modele=mo.id_modele
 and mo.id_marque=ma.id_marque
-and d.date_retour_effectif-date_retrait>10
-and to_char(d.date_retour_effectif,'MMYY')='1008'
-and lower(vi.nom)='nancy'
+and a.id_agence=1
+and least(d.date_retour_effectif,to_date('31/10/2008','DD/MM/YYYY'))-greatest(d.date_retrait,to_date('01/10/2008','DD/MM/YYYY'))>0
+group by v.num_immatriculation,ma.nom,mo.nom
+having sum(least(d.date_retour_effectif,to_date('31/10/2008','DD/MM/YYYY'))-greatest(d.date_retrait,to_date('01/10/2008','DD/MM/YYYY'))+1)>10
 /
 
 --Question 3
@@ -49,16 +50,17 @@ group by v.num_immatriculation,ma.nom,mo.nom
 
 --Question 5
 select d.id_dossier
-from villes v,agences a,dossiers d
-where v.id_ville=a.id_ville 
-and a.id_agence=d.id_agence_retrait
-and lower(v.nom)='nancy'
+from villes vi,agences a,vehicules ve,dossiers d
+where vi.id_ville=a.id_ville 
+and a.id_agence=ve.id_agence
+and ve.num_immatriculation=d.num_immatriculation
+and lower(vi.nom)='nancy'
 INTERSECT
 select d.id_dossier
-from villes v,agences a,dossiers d
-where v.id_ville=a.id_ville
+from villes vi,agences a,dossiers d
+where vi.id_ville=a.id_ville
 and a.id_agence=d.id_agence_retour
-and lower(v.nom)='strasbourg'
+and lower(vi.nom)='strasbourg'
 /
 
 
@@ -96,7 +98,7 @@ and d.num_immatriculation(+)=ve.num_immatriculation
 and ve.id_modele=mo.id_modele
 and mo.id_marque=ma.id_marque
 and lower(vi.nom)='nancy'
-and (to_char(NVL(d.date_retrait,SYSDATE),'MM/DD/YYYY')>'10/31/2008' or to_char(NVL (d.date_retour_effectif,SYSDATE),'MM/DD/YYY')<'10/01/2008')
+and (to_char(NVL(d.date_retrait,SYSDATE),'MM/DD/YYYY')>'10/31/2008' and to_char(NVL (d.date_retour_effectif,SYSDATE),'MM/DD/YYY')<'10/01/2008')
 group by ve.num_immatriculation,ma.nom,mo.nom
 /
 

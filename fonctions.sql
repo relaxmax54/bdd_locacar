@@ -1,26 +1,54 @@
-create or replace function calculTarif(dump in number)return number is
-reponse number:=0;
-begin
-return reponse;
-end;
+--Question 1
+CREATE OR REPLACE FUNCTION montantLocation(modeleVehicule IN NUMBER,joursDeLocation IN NUMBER) RETURN NUMBER IS
+prixjour tarifs.prix_jour%type;
+prixforfait tarifs.prix_forfait%type;
+nombreDeModeles number:=0;
+prixLocation number:=0;
+BEGIN
+IF (joursDeLocation>0) THEN
+	select count(*) into nombreDeModeles from modeles;
+	IF (modeleVehicule<=nombreDeModeles) THEN
+		select nvl(t.prix_jour,0) INTO prixjour
+		from tarifs t, categories c, modeles mo
+		where t.id_categorie=c.id_categorie
+		and c.id_categorie=mo.id_categorie
+		and mo.id_modele=modeleVehicule
+		and rownum=1
+		order by t.id_tarif;
+		select nvl(t.prix_forfait,0) into prixforfait
+		from tarifs t, categories c, modeles mo		
+		where t.id_categorie=c.id_categorie
+		and c.id_categorie=mo.id_categorie
+		and mo.id_modele=modeleVehicule
+		and rownum=1
+		order by t.id_tarif;
+		IF (MOD(joursDeLocation,7)>0) then
+			prixLocation:=MOD(joursDeLocation,7)*prixjour;
+		END IF;
+		prixLocation:=prixLocation+((joursDeLocation-MOD(joursDeLocation,7))/7)*prixforfait;
+	END IF;
+END IF;
+RETURN prixLocation;
+END;
 /
-create or replace function devis(modeleVehicule in modeles.id_modele%type,joursLocation in number)return number is
-cursor modele is select id_categorie from modeles where id_modele=modeleVehicule;
-cursor categorie is select id_categorie from categories;
-cursor tarif is select id_categorie,prix_jour,prix_forfait from tarifs;
-reponse number :=0;
-begin
-for record_modele in modele loop
-	for record_categorie in categorie loop
-		for record_tarif in tarif loop
-			if(record_modele.id_categorie=record_categorie.id_categorie and 
-
-record_categorie.id_categorie=record_tarif.id_categorie) then
-				select calculTarif(1) into reponse from dual;
-			end if;
-		end loop;
-	end loop;
-end loop;	
-return reponse;
-end;
+--Question 1 bis
+CREATE OR REPLACE PROCEDURE procDevis(modele in number,nombreJours in number) is
+BEGIN
+DBMS_OUTPUT.PUT_LINE(montantLocation(modele,nombreJours));
+END;
+/
+--Question 2
+CREATE OR REPLACE PROCEDURE enregistreReservation(voiture in vehicules.num_immatriculation%type,debut in dossiers.date_retrait%type,fin in dossiers.date_retour_prevu%type) is
+reservation dossiers.id_dossier%type;
+BEGIN
+select d.id_dossier into reservation
+from vehicules v,dossiers d
+where d.num_immatriculation=v.num_immatriculation
+and d.num_immatriculation=voiture
+and (debut>d.date_retour_effectif and fin<d.date_retrait);
+DBMS_OUTPUT.PUT_LINE(reservation);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('véhicule non disponible à cette date');
+END;
 /
