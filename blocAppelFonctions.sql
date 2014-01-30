@@ -1,6 +1,5 @@
-DECLARE
-
+CREATE OR REPLACE PROCEDURE procDevis(modele in number,nombreJours in number) is
 BEGIN
-DBMS_OUTPUT.PUT_LINE(montantLocation(1,10));
+DBMS_OUTPUT.PUT_LINE(montantLocation(modele,nombreJours));
 END;
 /

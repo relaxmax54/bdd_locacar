@@ -32,23 +32,35 @@ RETURN prixLocation;
 END;
 /
 --Question 1 bis
-CREATE OR REPLACE PROCEDURE procDevis(modele in number,nombreJours in number) is
+DECLARE
+modele number:=1;
+nombreJours number:=10;
 BEGIN
 DBMS_OUTPUT.PUT_LINE(montantLocation(modele,nombreJours));
 END;
 /
 --Question 2
-CREATE OR REPLACE PROCEDURE enregistreReservation(voiture in vehicules.num_immatriculation%type,debut in dossiers.date_retrait%type,fin in dossiers.date_retour_prevu%type) is
+CREATE OR REPLACE PROCEDURE estDisponible(evoiture in vehicules.num_immatriculation%type,debut in dossiers.date_retrait%type,fin in dossiers.date_retour_prevu%type) is
 reservation dossiers.id_dossier%type;
 BEGIN
 select d.id_dossier into reservation
 from vehicules v,dossiers d
 where d.num_immatriculation=v.num_immatriculation
 and d.num_immatriculation=voiture
-and (debut>d.date_retour_effectif and fin<d.date_retrait);
-DBMS_OUTPUT.PUT_LINE(reservation);
+and (debut>d.date_retour_effectif or fin>d.date_retrait);
+DBMS_OUTPUT.PUT_LINE('Véhicule disponible');
 EXCEPTION
 WHEN NO_DATA_FOUND THEN
-DBMS_OUTPUT.PUT_LINE('véhicule non disponible à cette date');
+DBMS_OUTPUT.PUT_LINE('véhicule non disponible à cette période');
+END;
+/
+--Question 2 bis
+DECLARE
+debut date:='01/01/2013';
+fin date:='02/01/2013';
+voiture varchar(2):='QQ030KK';
+nombreJours number:=10;
+BEGIN
+DBMS_OUTPUT.PUT_LINE(estDisponible(voiture,debut,fin));
 END;
 /
