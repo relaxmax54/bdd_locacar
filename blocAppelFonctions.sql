@@ -1,7 +1,6 @@
 DECLARE
-reponse NUMBER :=9;
+
 BEGIN
-reponse:=essai(10);
-DBMS_OUTPUT.PUT_LINE(reponse);
+DBMS_OUTPUT.PUT_LINE(montantLocation(1,10));
 END;
 /

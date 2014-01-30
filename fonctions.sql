@@ -1,3 +1,4 @@
+--Question 1
 CREATE OR REPLACE FUNCTION montantLocation(modeleVehicule IN NUMBER,joursDeLocation IN NUMBER) RETURN NUMBER IS
 prixjour tarifs.prix_jour%type;
 prixforfait tarifs.prix_forfait%type;
@@ -28,5 +29,26 @@ IF (joursDeLocation>0) THEN
 	END IF;
 END IF;
 RETURN prixLocation;
+END;
+/
+--Question 1 bis
+CREATE OR REPLACE PROCEDURE procDevis(modele in number,nombreJours in number) is
+BEGIN
+DBMS_OUTPUT.PUT_LINE(montantLocation(modele,nombreJours));
+END;
+/
+--Question 2
+CREATE OR REPLACE PROCEDURE enregistreReservation(voiture in vehicules.num_immatriculation%type,debut in dossiers.date_retrait%type,fin in dossiers.date_retour_prevu%type) is
+reservation dossiers.id_dossier%type;
+BEGIN
+select d.id_dossier into reservation
+from vehicules v,dossiers d
+where d.num_immatriculation=v.num_immatriculation
+and d.num_immatriculation=voiture
+and (debut>d.date_retour_effectif and fin<d.date_retrait);
+DBMS_OUTPUT.PUT_LINE(reservation);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('véhicule non disponible à cette date');
 END;
 /
