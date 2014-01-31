@@ -64,3 +64,28 @@ BEGIN
 DBMS_OUTPUT.PUT_LINE(estDisponible(voiture,debut,fin));
 END;
 /
+--Question 3
+CREATE OR REPLACE PROCEDURE listeDisponible(cat in modeles.id_categorie%type,debut in dossiers.date_retrait%type,fin in dossiers.date_retour_prevu%type) is
+CURSOR liste is 
+select v.num_immatriculation immat,mo.nom nom
+from vehicules v,modeles mo,dossiers d,categories c
+where d.num_immatriculation=v.num_immatriculation
+and v.id_modele=mo.id_modele
+and mo.id_categorie=c.id_categorie
+and (sysdate>d.date_retour_effectif or sysdate<d.date_retrait)
+and c.id_categorie=cat
+group by v.num_immatriculation,mo.nom;
+BEGIN
+DBMS_OUTPUT.PUT_LINE('les vehicules de categorie '||cat||' suivants sont disponibles: ');
+DBMS_OUTPUT.PUT_LINE(' ');
+for boucle in liste loop
+DBMS_OUTPUT.PUT_LINE('matricule'||boucle.immat);
+end loop;
+END;
+/
+
+BEGIN
+listeDisponible(1,to_date('01/01/2013','MM/DD/YYYY'),to_date('02/01/2013','MM/DD/YYYY'));
+END;
+/
+
